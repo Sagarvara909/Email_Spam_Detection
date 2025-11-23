@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spam Classifier</title>
+
+  <style>
+    :root {
+      --bg: #f3f7ff;
+      --card: #ffffff;
+      --primary: #1e40af;
+      --muted: #6b7280;
+      --success: #0ea56a;
+      --danger: #dc3023;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #ffffff);
+      font-family: Inter, system-ui, Roboto, Arial;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 760px;
+      background: var(--card);
+      padding: 26px;
+      border-radius: 14px;
+      box-shadow: 0 14px 40px rgba(37, 99, 235, 0.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    p.subtitle {
+      margin: 6px 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #dce6ff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.10);
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-check {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-clear {
+      background: #eef4ff;
+      color: var(--primary);
+    }
+
+    .result-box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #f8fbff;
+      border: 1px solid rgba(37, 99, 235, 0.08);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .spam {
+      background: var(--danger);
+    }
+
+    .ham {
+      background: var(--success);
+    }
+
+    .confidence {
+      color: var(--muted);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <h1>Spam Classifier</h1>
+    <p class="subtitle">Paste subject and email text — click Check</p>
+
+    <form method="POST" action="/">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" value="{{ subject }}" placeholder="Email subject (optional)">
+
+      <div style="margin-top:12px">
+        <label for="email_text">Email Text</label>
+        <textarea id="email_text" name="email_text"
+          placeholder="Paste full email body here...">{{ email_text }}</textarea>
+      </div>
+
+      <div class="controls">
+        <button type="submit" class="btn btn-check">Check</button>
+      </div>
+    </form>
+
+    {% if label %}
+    <div class="result-box">
+      <span class="badge {{ 'spam' if label=='SPAM' else 'ham' }}">{{ label }}</span>
+      <div class="confidence">Confidence: {{ probability }}</div>
+    </div>
+    {% endif %}
+
+    <footer>Developed by: Suman & Sagar</footer>
+  </div>
+
+</body>
+
+</html>
